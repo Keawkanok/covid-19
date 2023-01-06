@@ -7,14 +7,22 @@
         </router-link>
         <ul class="nav navbar-nav flex-row float-right">
           <li class="nav-item">
-            <router-link to="/" class="nav-link ">Graph</router-link>
+            <router-link to="/" class="nav-link ">Graph Covid-19</router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link to="/hello" class="nav-link ">Hello</router-link>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <router-link to="/table" class="nav-link ">Table</router-link>
+            <router-link to="/table" class="nav-link ">Table Country</router-link>
           </li>
+
+          <li class="nav-item">
+            <router-link to="/Worldwide" class="nav-link ">Graph Worldwide</router-link>
+          </li>
+
+          <!-- <li class="nav-item">
+            <router-link to="/table" class="nav-link ">Table Country</router-link>
+          </li> -->
         </ul>
       </div>
     </nav>

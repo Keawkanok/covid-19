@@ -15,7 +15,7 @@
                                         <option :value="30">ย้อนหลัง 1 เดือน</option>
                                         <option :value="60">ย้อนหลัง 2 เดือน</option>
                                         <option :value="90">ย้อนหลัง 3 เดือน</option>
-                                        <!-- <option :value="14">ย้อนหลัง 2 สัปดาห์</option> -->
+                                        <option :value="120">ย้อนหลัง 4 เดือน</option>
                                         <option :value="0">ดูรวมโดยรวมทั้งหมด</option>
                                     </select>
                                 </div>
@@ -42,7 +42,6 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 
 export default {
     components: {
-        // DatePicker, 
         Line
     },
     data() {
