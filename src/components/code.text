@@ -1,0 +1,295 @@
+<template>
+
+    <div style=" margin: auto; width: 60%; border: 3px solid #73AD21; padding: 10px;">
+        <h1 class="black-background">Graph Covid-19</h1>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <tr>
+                            <th>
+                                <div id="app" class="p-3">
+                                    <select v-model="days" class="form-select" @change="ChangeTime"
+                                        aria-label="Default select example">
+                                        <option :value="30">ย้อนหลัง 1 เดือน</option>
+                                        <option :value="14">ย้อนหลัง 2 สัปดาห์</option>
+                                        <option :value="0">ดูรวม</option>
+                                    </select>
+                                    <!-- <button type="button" class="btn btn-primary" onclick="add()" :value="30"> ย้อนหลัง 2
+                                        สัปดาห์ </button>
+                                    <button @change="ChangeTime2" :value="0" type="button" class="btn btn-primary">
+                                        ดูรวม</button> -->
+
+                                    <!-- <DatePicker mode='date' v-model="date" is-range 
+                                        @dayclick='dayClicked'>
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <div class="flex justify-center items-center">
+                                                <label for="">Start</label>
+                                                <input @input="onDateRangeChange()" :value="inputValue.start"
+                                                    v-on="inputEvents.start" :attributes='attributes'
+                                                    class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300" />
+
+                                                <label for="">End</label>
+                                                <input :value="inputValue.end" v-on="inputEvents.end"
+                                                    class="border px-2 py-1 w-32 rounded focus:outline-none focus:border-indigo-300" />
+                                            </div>
+                                        </template>
+
+                                    </DatePicker> -->
+
+                                    <!-- <DatePicker mode='range' v-model='range' is-inline :columns="$screens({ default: 1, lg: 2 })"/> -->
+                                    <!-- {{ date.start }}
+
+                                    {{ date.end }} -->
+                                    <!-- <button @click.prevent="ChangeTime()" class="btn btn-danger"> กด </button> -->
+                                </div>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <canvas id="myChart"></canvas> -->
+    </div>
+    <!-- <DatePicker :attributes='attributes' @dayclick='dayClicked'>
+    </DatePicker>
+    <div v-if='selectedDay' class='selected-day'>
+        <h3>{{ selectedDay.date.toDateString() }}</h3>
+        <ul>
+            <li v-for='attr in selectedDay.attributes' :key='attr.key'>
+                {{ attr.customData.description }}
+            </li>
+        </ul>
+    </div> -->
+    <Line id="my-chart-id" :options="chartOptions" :data="data" />
+
+</template>
+
+<script>
+
+
+import 'v-calendar/dist/style.css'
+// import { DatePicker } from 'v-calendar';
+import Api from "../services/index"
+// import Chart from 'chart.js/auto';
+import { Line } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)
+// import { debuggerStatement } from '@babel/types';
+// import moment from 'moment';
+
+export default {
+    components: {
+        // DatePicker, 
+        Line
+    },
+    data() {
+        return {
+            newcases: [],
+            deaths: [],
+            recovered: [],
+            labels: [],
+            days: '30',
+            date: {
+                date: new Date(),
+                isCompleted: false,
+                color: 'red'
+            },
+            data: {
+                labels: this.labels,
+                datasets: [{
+                    label: 'New Cases',
+                    backgroundColor: 'rgb(255, 255, 0)',
+                    borderColor: 'rgb(255, 255, 0)',
+                    data: this.newcases,
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Deaths',
+                    backgroundColor: 'rgb(255, 0, 0)',
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: this.deaths,
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Recovered',
+                    backgroundColor: 'rgb(0, 255, 0)',
+                    borderColor: 'rgb(0, 255, 0)',
+                    data: this.recovered,
+                    fill: false,
+                    tension: 0.1
+                },
+                ]
+            },
+            chartOptions: {
+                responsive: true
+            }
+        }
+    }, methods: {
+        ChangeTime() {
+            this.information(this.days);
+            this.getData(this.days);
+            console.log(this.days)
+        },
+        dayClicked(day) {
+            this.selectedDay = day;
+            console.log(this.selectedDay)
+        },
+        information(days) {
+            // myChart destroy information ลบข้อมูลอันแรก
+            // console.log(this.days + " information")
+            // Api
+            Api.created(days).then((res) => {
+                this.resetData();
+                // res.data
+                console.log(res.data)
+                for (let i in res.data.cases) {
+                    this.labels.push(i)
+                    this.newcases.push(res.data.cases[i])
+                }
+                for (let i in res.data.deaths) {
+                    this.deaths.push(res.data.deaths[i])
+                } for (let i in res.data.recovered) {
+                    this.recovered.push(res.data.recovered[i])
+                }
+
+                this.data = {
+                    days: this.days,
+                    labels: this.labels,
+                    datasets: [{
+                        label: 'New Cases',
+                        backgroundColor: 'rgb(255, 255, 0)',
+                        borderColor: 'rgb(255, 255, 0)',
+                        data: this.newcases,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Deaths',
+                        backgroundColor: 'rgb(255, 0, 0)',
+                        borderColor: 'rgb(255, 0, 0)',
+                        data: this.deaths,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Recovered',
+                        backgroundColor: 'rgb(0, 255, 0)',
+                        borderColor: 'rgb(0, 255, 0)',
+                        data: this.recovered,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    ]
+                }
+            })
+        }, resetData: function () {
+            this.cases = [];
+            this.deaths = [];
+            this.recovered = [];
+            this.labels = [];
+        }
+    }, attributes() {
+        return this.date.map(t => ({
+            key: `date.${t.id}`,
+            dot: {
+                backgroundColor: t.color,
+            },
+            dates: t.date,
+            customData: t,
+        }));
+    },
+    mounted() {
+        this.information()
+
+
+        // เพิ่มข้อมูลใน this.data.datasets ตำแหน่งนั้น 
+        // this.data.datasets[0].data = Object.values(res.data.cases);
+        // this.data.datasets[1].data = Object.values(res.data.deaths);
+        // this.data.datasets[2].data = Object.values(res.data.recovered);
+
+
+        // TimeCases แปลง วัน/เดือน/ปี เป็น eng
+        // const TimeCases = {};
+        // for (const key in res.data.cases) {
+        //     const date = new Date(key);
+        //     const formattedDateMonth = date.toLocaleDateString('en-US', { day: 'numeric', year: '2-digit', month: 'short' });
+        //     TimeCases[formattedDateMonth] = res.data.cases[key];
+        // }
+
+        // TimeDeaths
+        // const TimeDeaths = {};
+        // for (const key in res.data.deaths) {
+        //     const date = new Date(key);
+        //     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+        //     TimeDeaths[formattedDate] = res.data.deaths[key];
+        // }
+
+
+        // TimeRe
+        // const TimeRe = {};
+        // for (const key in res.data.recovered) {
+        //     const date = new Date(key);
+        //     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+        //     TimeRe[formattedDate] = res.data.recovered[key];
+        // }
+
+        // เพิ่มข้อมูลใน this.data.labels 
+        // this.data.labels = Object.keys(TimeCases)
+        // this.data.labels = Object.keys(TimeDeaths)
+        // this.data.labels = Object.keys(TimeRe)
+
+        // function groupByMonthAndYear(records) {
+        //     const groups = {};
+        //     for (const [key, value] of Object.entries(records)) {
+        //         // console.log(key)
+        //         const date = new Date(key);
+        //         const month = date.getMonth();
+        //         const year = date.getFullYear();
+        //         // console.log(month, year)
+        //         if (!groups[year]) {
+        //             groups[year] = {};
+        //         }
+        //         if (!groups[year][month]) {
+        //             groups[year][month] = [];
+        //             // console.log(key)
+        //         }
+        //         groups[year][month].push({ "Date": key, "value": value });
+        //         // console.log(groups[year][month].push(key))
+        //     }
+        //     return groups;
+        // }
+        // const groups = groupByMonthAndYear(res.data.cases);
+        // // console.log(groups)
+
+        // for (const i in groups) {
+        //     // console.log(groups[i])
+        //     for (let j = 0; j <= Object.keys(groups[i]).length; j++) {
+        //         // console.log(groups[i][j])
+        //         // this.data.dateselect.push(groups[i][j])
+        //         if (groups[i][j] != undefined) {
+        //             for (let k = 0; k <= Object.keys(groups[i][j]).length; k++) {
+        //                 if (groups[i][j][k] != undefined) {
+        //                     // console.log(groups[i][j][k].Date)
+        //                     // this.data.dateselect.push(groups[i][j][k].Date)
+        //                     // this.data.datedelect = groups[i][j][k].Date
+        //                     // date.options.push(groups[i][j][k].Date)
+        //                     // console.log(this.data.dateselect.push(Object.values(groups[i][j][k].Date)))
+
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        //     })
+        // }
+    }
+}
+
+</script>
