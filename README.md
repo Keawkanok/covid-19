@@ -17,7 +17,7 @@ pnpm run build OR npm run build
 
 ### Lints and fixes files
 ```
-pnpm run lint OR npm install run lint
+pnpm run lint OR npm run lint
 ```
 
 ### Customize configuration
