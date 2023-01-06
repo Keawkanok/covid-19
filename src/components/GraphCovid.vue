@@ -1,6 +1,6 @@
 <template>
 
-    <div style=" margin: auto; width: 60%; border: 3px solid #73AD21; padding: 10px;">
+    <div style=" margin: auto; width: 62%;  padding: 10px;">
         <h1 class="black-background">Graph Covid-19</h1>
         <br>
         <div class="row justify-content-center">

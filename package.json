@@ -20,7 +20,8 @@
         "v-calendar": "^3.0.0-alpha.8",
         "vue": "^3.2.45",
         "vue-chartjs": "^5.1.0",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "@fortawesome/fontawesome-free": "^5.15.3"
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",

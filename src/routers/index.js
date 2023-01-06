@@ -28,6 +28,7 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "about" */ '../view/TableWorldwide.vue')
     },
+
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

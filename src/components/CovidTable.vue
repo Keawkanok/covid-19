@@ -1,6 +1,6 @@
 <template>
-    <div style=" margin: auto; width: 90%;  padding: 10px;">
-        <h1 class="black-background">Tables Covid-19 </h1><br>
+    <div style=" margin: auto; width: 80%;  padding: 10px;">
+        <h1 class="black-background">Table Covid-19 </h1><br>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="row">
@@ -99,5 +99,20 @@ th {
 table {
     border-collapse: collapse;
     width: 100%;
+}
+#nav {
+  padding: 30px;
+  text-align: center;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: whitesmoke;
+  background: crimson;
+  border-radius: .5rem;
 }
 </style>

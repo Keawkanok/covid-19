@@ -1,7 +1,7 @@
 <template>
-  <div style=" margin: auto; width: 90%;  padding: 10px;">
+  <div style=" margin: auto; width: 70%;  padding: 10px;">
 
-    <h1 class="black-background">Tables Covid-19 </h1>
+    <h1 class="black-background">Table Covid-19 </h1>
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="row">
@@ -44,6 +44,8 @@
       </div>
     </div>
   </div>
+
+ 
 </template>
 
 <script>
