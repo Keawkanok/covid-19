@@ -2,22 +2,22 @@
 
 ## Project setup
 ```
-pnpm install or npm install
+pnpm install OR npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-pnpm run serve or npm run serve
+pnpm run serve OR npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-pnpm run build or npm run build
+pnpm run build OR npm run build
 ```
 
 ### Lints and fixes files
 ```
-pnpm run lint or npm install run lint
+pnpm run lint OR npm install run lint
 ```
 
 ### Customize configuration
