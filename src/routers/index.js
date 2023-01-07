@@ -26,7 +26,7 @@ const routes = [{
         path: '/Worldwide',
         name: 'Worldwide',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../view/TableWorldwide.vue')
+            import ( /* webpackChunkName: "about" */ '../components/TableWorldwide.vue')
     },
 
 ];

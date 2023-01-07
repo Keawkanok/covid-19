@@ -1,16 +1,12 @@
 <template>
-  <div style=" margin: auto; width: 70%;  padding: 10px;">
+  <!-- <div style=" margin: auto; width: 70%;  padding: 10px;">
 
     <h1 class="black-background">Table Covid-19 </h1>
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-12">
-            <!-- <b-dropdown text="Name Country" variant="primary">
-              <b-dropdown-item v-for="item in continents" :key="item" @click="selectItem(item)">
-                {{ item }}
-              </b-dropdown-item>
-            </b-dropdown> -->
+           
             <div id="app" class="p-3" style=" ">
               <select v-model="days" class="form-select" @change="ChangeTime" aria-label="Default select example">
                 <option :value="30">ย้อนหลัง 1 เดือน</option>
@@ -31,7 +27,6 @@
               </thead>
               <tbody>
                 <tr v-for=" (item, index) in labels" :key="item">
-                  <!-- <td>{{ index + 1 }}</td> -->
                   <td>{{ item }}</td>
                   <td>{{ newcases[index] }}</td>
                   <td>{{ deaths[index] }}</td>
@@ -43,20 +38,43 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <div id="app" class="p-3">
+              <select v-model="days" class="form-select" @change="ChangeTime" aria-label="Default select example">
+                <option :value="30">ย้อนหลัง 1 เดือน</option>
+                <option :value="60">ย้อนหลัง 2 เดือน</option>
+                <option :value="90">ย้อนหลัง 3 เดือน</option>
+                <option :value="120">ย้อนหลัง 4 เดือน</option>
+                <option :value="0">ดูรวมโดยรวมทั้งหมด</option>
+              </select>
+            </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>New Cases</th>
+        <th>Deaths</th>
+        <th>Recovered</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for=" (item, index) in labels" :key="item">
+        <!-- <td>{{ index + 1 }}</td> -->
+        <td>{{ item }}</td>
+        <td>{{ newcases[index] }}</td>
+        <td>{{ deaths[index] }}</td>
+        <td>{{ recovered[index] }}</td>
+      </tr>
+    </tbody>
+  </table>
 
- 
 </template>
 
 <script>
 import Api from "../services/index"
-import { BDropdown, BDropdownItem } from 'bootstrap-vue-3'
 
 export default {
-  components: {
-    BDropdown,
-    BDropdownItem
-  },
+ 
   data() {
     return {
       newcases: [],
@@ -104,7 +122,7 @@ export default {
     information(days) {
       Api.created(days).then((res) => {
         this.resetData();
-        console.log(res.data)
+        // console.log(res.data)
         for (let i in res.data.cases) {
           // this.labels.push(i)
           this.newcases.push(res.data.cases[i])
@@ -181,7 +199,5 @@ export default {
 
 
 <style>
-.background {
-  color: coral;
-}
+
 </style>

@@ -1,15 +1,15 @@
 <template>
 
-    <div style=" margin: auto; width: 62%;  padding: 10px;">
+    <!-- <div style="" class="wrapper">
         <h1 class="black-background">Graph Covid-19</h1>
         <br>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 box">
                         <tr>
                             <th>
-                                <div id="app" class="p-3" style=" ">
+                                <div id="app" class="p-3 flex-container" style=" ">
                                     <select v-model="days" class="form-select" @change="ChangeTime"
                                         aria-label="Default select example">
                                         <option :value="30">ย้อนหลัง 1 เดือน</option>
@@ -21,18 +21,50 @@
                                 </div>
                             </th>
                         </tr>
-                        <Line id="my-chart-id" :options="chartOptions" :data="data" />
                     </div>
                 </div>
             </div>
         </div>
+    </div> -->
+    <!-- <div id="app" class="d-flex p-2" style=" ">
+        <select v-model="days" class="form-select" @change="ChangeTime" aria-label="Default select example">
+            <option :value="30">ย้อนหลัง 1 เดือน</option>
+            <option :value="60">ย้อนหลัง 2 เดือน</option>
+            <option :value="90">ย้อนหลัง 3 เดือน</option>
+            <option :value="120">ย้อนหลัง 4 เดือน</option>
+            <option :value="0">ดูรวมโดยรวมทั้งหมด</option>
+        </select>
     </div>
+    <Line id="my-chart-id" :options="chartOptions" :data="data" width="400" height="400" class="d-flex p-2" /> -->
 
+    <!-- <div class="sb-nav-fixed">
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="">
+                        <h1 class="mt-4">Charts</h1>
+                        
+                        <div class="card mb-4">
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div> -->
+
+    <select v-model="days" class="form-select" @change="ChangeTime" aria-label="Default select example">
+        <option :value="30">ย้อนหลัง 1 เดือน</option>
+        <option :value="60">ย้อนหลัง 2 เดือน</option>
+        <option :value="90">ย้อนหลัง 3 เดือน</option>
+        <option :value="120">ย้อนหลัง 4 เดือน</option>
+        <option :value="0">ดูรวมโดยรวมทั้งหมด</option>
+    </select>
+    <Line id="my-chart-id" :options="chartOptions" :data="data" width="100%" height="350" />
 
 </template>
 
 <script>
-
+import '../css/styles.css'
 import 'v-calendar/dist/style.css'
 import Api from "../services/index"
 import { Line } from 'vue-chartjs'
@@ -86,12 +118,12 @@ export default {
     }, methods: {
         ChangeTime() {
             this.information(this.days);
-            console.log(this.days)
+            // console.log(this.days)
         },
         information(days) {
             Api.created(days).then((res) => {
                 this.resetData();
-                console.log(res.data)
+                // console.log(res.data)
                 for (let i in res.data.cases) {
                     // this.labels.push(i)
                     this.newcases.push(res.data.cases[i])
@@ -167,3 +199,20 @@ export default {
 }
 
 </script>
+
+<style>
+/* .wrapper {
+    width: 100%;
+    max-width: 960%;
+    margin: 0 auto;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.box {
+    height: 100px;
+    min-width: 10px;
+} */
+</style>

@@ -1,5 +1,5 @@
 <template>
-    <div style=" margin: auto; width: 80%;  padding: 10px;">
+    <!-- <div style=" margin: auto; width: 80%;  padding: 10px;">
         <h1 class="black-background">Table Covid-19 </h1><br>
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -36,14 +36,41 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+    <select v-model="select" class="form-select" aria-label="Default select example">
+        <option v-for="item in continents" :key="item" :value="item" @click="selectItem(item)">{{
+            item
+        }}</option>
+    </select><br>
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Cases</th>
+                <th>Deaths</th>
+                <th>Recovered</th>
+                <th>Country pictures</th>
+            </tr>
+        </thead>
+        <tr v-for="item in informationCountry" :key="item">
+            <td>{{ item.cases }}</td>
+            <td>{{ item.deaths }}</td>
+            <td>{{ item.recovered }}</td>
+            <td><img :src="item.countryInfo.flag" style=" width: 38%;" /></td>
+        </tr>
+    </table>
+
+
 
 </template>
 
 <script>
+
+
 import Api from "../services/index"
 import { BDropdown, BDropdownItem } from 'bootstrap-vue-3'
-
+import '../css/styles.css'
+import '../js/scripts.js'
 export default {
     components: {
         BDropdown,
@@ -85,11 +112,6 @@ export default {
 
 
 <style>
-.background {
-    color: coral;
-}
-
-table,
 td,
 th {
     border: 1px solid black;
@@ -100,19 +122,18 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
+
 #nav {
-  padding: 30px;
-  text-align: center;
+    padding: 30px;
+    text-align: center;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 #nav a.router-link-exact-active {
-  color: whitesmoke;
-  background: crimson;
-  border-radius: .5rem;
+    
 }
 </style>
